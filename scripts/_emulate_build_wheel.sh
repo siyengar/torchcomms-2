@@ -8,7 +8,18 @@
 
 set -ex
 
+if [ "$(uname -m)" = "aarch64" ]; then
+    echo "Building for aarch64"
+    curl -L -o /mambaforge.sh https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh
+    chmod +x /mambaforge.sh
+    /mambaforge.sh -b -p /opt/conda
+    rm /mambaforge.sh
+    source /opt/conda/etc/profile.d/conda.sh
+fi
+
 cd /torchcomms
+
+
 
 CONDA_ENV=/tmp/conda_env
 #conda create --yes --quiet --prefix "$CONDA_ENV" python=3.10 cmake=3.31.2 ninja=1.12.1 pkg-config=0.29 wheel=0.37

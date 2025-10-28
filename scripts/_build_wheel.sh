@@ -11,8 +11,10 @@ dnf config-manager --set-enabled powertools
 dnf install -y almalinux-release-devel
 dnf install -y openssl-static ninja-build cmake
 
-# Install older openssl which is compatible with manylinux2.28 system openssl.
-conda install -y openssl==3.0.18
+if [ "$(uname -m)" != "aarch64" ]; then
+    # Install older openssl which is compatible with manylinux2.28 system openssl.
+    conda install -y openssl==3.0.18
+fi
 
 # Nuke conda cmake, ninja and libstdc++ we want to install to use system libraries.
 rm -f "$CONDA_PREFIX/lib/libstdc"* || true
